@@ -40,8 +40,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'Login',
   data() {
@@ -58,10 +56,6 @@ export default {
         reg: /^[A-Za-z0-9]+$/,
         state: false,
       },
-      loginForm: {
-        username: '',
-        password: '',
-      },
     }
   },
   methods: {
@@ -71,7 +65,6 @@ export default {
         this.$refs.usernameRef.style.borderColor = 'rgba(255, 255, 255, 0.4)'
       } else if (this.username.reg.test(this.username.val.trim())) {
         this.username.state = true
-        this.loginForm.username = this.username.val
         this.$refs.usernameRef.style.borderColor = '#BCEE68'
       } else {
         this.$message({
@@ -88,7 +81,6 @@ export default {
         this.$refs.passwordRef.style.borderColor = 'rgba(255, 255, 255, 0.4)'
       } else if (this.password.reg.test(this.password.val.trim())) {
         this.password.state = true
-        this.loginForm.password = this.password.val
         this.$refs.passwordRef.style.borderColor = '#BCEE68'
       } else {
         this.$message({
@@ -102,26 +94,29 @@ export default {
     },
     loginIn() {
       if (!(this.username.state && this.password.state)) {
-        this.$message({
+        return this.$message({
           showClose: true,
           message: '账号密码格式不正确',
           type: 'error',
         })
       } else if (this.username.state && this.password.state) {
-        axios({
-          url: 'http://127.0.0.1:8888/api/private/v1/login',
+        this.$http({
+          url: '/login/manager',
           method: 'POST',
-          params: this.loginForm,
+          data: {
+            username: this.username.val,
+            password: this.password.val,
+          },
         }).then(
           (res) => {
-            if (res.data.meta.status === 400) {
+            if (res.data.status === 1) {
               this.$message({
                 showClose: true,
-                message: res.data.meta.msg,
+                message: res.data.message,
                 type: 'error',
               })
-            } else if (res.data.meta.status === 200) {
-              window.sessionStorage.setItem('token', res.data.data.token)
+            } else if (res.data.status === 0) {
+              window.sessionStorage.setItem('token', res.data.token)
               this.current = 'success'
               this.$refs.loginText.innerHTML = 'Welcome'
               setTimeout(() => {
