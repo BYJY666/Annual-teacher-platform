@@ -17,14 +17,19 @@
           ></i>
         </div>
         <el-menu
-          default-active="1"
+          :default-active="activePath ? activePath : '/home/welcome'"
           class="el-menu-vertical-demo"
           background-color="#33495d"
           text-color="#fff"
           active-text-color="#ffd04b"
           :collapse="iscollapse"
           :collapse-transition="false"
+          router
         >
+          <el-menu-item index="/home/welcome" @click="keepActive">
+            <i class="el-icon-s-home"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
           <el-submenu
             :index="item.id + ''"
             v-for="item in menulist"
@@ -37,9 +42,10 @@
             </template>
             <!-- 二级菜单 -->
             <el-menu-item
-              :index="subItem.id + ''"
+              :index="'/' + subItem.path"
               v-for="subItem in item.children"
               :key="subItem.id"
+              @click="keepActive"
             >
               <i class="el-icon-menu"></i>
               <span>{{ subItem.menusName }}</span>
@@ -48,7 +54,9 @@
         </el-menu>
       </el-aside>
       <!-- 内容栏 -->
-      <el-main>Main</el-main>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -64,22 +72,26 @@ export default {
         102: 'el-icon-s-custom',
       },
       iscollapse: false,
+      activePath: '',
     }
   },
   methods: {
     outLogin() {
-      window.sessionStorage.clear('token')
-      this.$router.push('/login')
+      window.sessionStorage.clear()
+      this.$router.push('/index/firstPage')
     },
     async getMenuList() {
       const { data: res } = await this.$http.get('/jurisdiction/menus')
       if (res.meta.status !== 200) return this.$message.error(res.meta.message)
       this.menulist = res.data
-      console.log(res.data)
+    },
+    keepActive() {
+      window.sessionStorage.setItem('path', this.$route.path)
     },
   },
   created() {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('path')
   },
 }
 </script>

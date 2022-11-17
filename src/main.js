@@ -4,6 +4,8 @@ import axios from 'axios'
 import router from './router/router'
 import './assets/css/global.css'
 import './plugins/element'
+import store from './store'
+import './assets/iconfont/iconfont.css'
 
 axios.defaults.baseURL = 'http://127.0.0.1:3007'
 axios.interceptors.request.use(config => {
@@ -16,5 +18,6 @@ Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router
+  router,
+  store
 }).$mount('#app')

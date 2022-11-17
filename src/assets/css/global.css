@@ -11,3 +11,45 @@ body,
   padding: 0;
   box-sizing: border-box;
 }
+
+.m {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+li {
+  list-style: none;
+}
+
+em,
+i {
+  font-style: normal
+}
+
+img {
+  border: 0;
+  vertical-align: middle
+}
+
+a {
+  color: #666;
+  text-decoration: none
+}
+
+button {
+  cursor: pointer
+}
+
+button,
+input {
+  font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+  outline: none;
+}
+
+.el-card {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+}
+
+textarea {
+  resize: none !important;
+}
