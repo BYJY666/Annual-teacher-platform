@@ -4,7 +4,11 @@
       <el-card class="m">
         <div class="left">
           <div class="imgBox">
-            <img :src="userinfo.avatar" fit="cover" id="avatar" />
+            <img
+              :src="'http://127.0.0.1:3007/images/' + userinfo.avatar"
+              fit="cover"
+              id="avatar"
+            />
           </div>
           <el-upload
             class="upload-demo"
@@ -190,14 +194,15 @@ export default {
       this.userinfo.username = res.data.user.username
       this.userinfo.phone = res.data.user.phone
       this.userinfo.school = res.data.user.school
-      this.userinfo.avatar = require('../../upload/images/' +
-        res.data.user.avatar)
+      this.userinfo.avatar = res.data.user.avatar
       this.user.oldAvatar = res.data.user.avatar
       this.workList = res.data.workList
     },
     success(response) {
-      if (response.status !== 200) return this.$message.error('更换头像失败!')
-      this.$message.success(response.message)
+      if (response.meta.status !== 200)
+        return this.$message.error('更换头像失败!')
+      this.$message.success(response.meta.message)
+      this.userinfo.avatar = response.data.avatar
     },
     addDialogClosed() {
       this.$refs.userinfoRef.resetFields()

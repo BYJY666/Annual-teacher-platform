@@ -9,7 +9,7 @@
           <figure>
             <video
               controls
-              :src="require('../../upload/videos/' + item.video)"
+              :src="'http://127.0.0.1:3007/videos/' + item.video"
               poster="../assets/images/视频封面.jpg"
             />
             <figcaption>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Breadcrumb firstName="作品管理" secondName="作品详情"></Breadcrumb>
+    <Breadcrumb firstName="教师管理" secondName="账号列表"></Breadcrumb>
     <WorkList url="/user/userList">
       <template v-slot:AddBtn>
         <el-button type="primary" @click="addDialogVisible = true"

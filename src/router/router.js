@@ -5,7 +5,6 @@ import Welcome from '../pages/Welcome'
 import Details from '../pages/Details'
 import Examine from '../pages/Examine'
 import AccountList from '../pages/AccountList'
-import NewAccount from '../pages/NewAccount'
 import Index from '../pages/Index'
 import FirstPage from '../pages/FirstPage'
 import LoginAndRegistration from '../pages/LoginAndRegistration'
@@ -78,11 +77,7 @@ const router = new Router({
         {
           path: 'accountList',
           component: AccountList
-        },
-        {
-          path: 'newAccount',
-          component: NewAccount
-        },
+        }
       ]
     }
   ]
